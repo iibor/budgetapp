@@ -1,30 +1,24 @@
 //Data Modules
 
+//BUDGET CONTROLLER
+
 //päivitä budjetti
 var budgetController = (function() {
-  var x = 23;
 
-  var add = function(sum) {
-    return x + sum;
-  }
-
-  return {
-    publicTest: function(b) {
-      return add(b);
-    }
-  }
 
 })();
 
 // lisää uusi item taulukkoon
 
 
+
+//UI CONTROLLER
 //UI Module
 
 // lisää uusi item UI:hin
 
-// päivitä UI
 
+// päivitä UI
 var UIController = (function() {
 
 })();
@@ -32,17 +26,14 @@ var UIController = (function() {
 // hae input valuet
 
 
-//Controller Module
 
+
+//Controller Module
+//GLOBAL APP CONTROLLER
 var controller = (function(budgetCtrl, UICtrl) {
 
-  var z = budgetCtrl.publicTest(5);
+  document.querySelector.addEventListener()
 
-  return {
-    anotherPublic: function() {
-      console.log(z);
-    }
-  }
 
 })(budgetController, UIController);
 
