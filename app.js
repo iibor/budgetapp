@@ -96,7 +96,8 @@ var UIController = (function() {
     getInput: function() {
       return {
         desc: document.querySelector(DOMstrings.inputDesc).value,
-        value: document.querySelector(DOMstrings.inputValue).value,
+        //Muunnetaan string desimaaliluvuksi
+        value: parseFloat(document.querySelector(DOMstrings.inputValue).value),
         type: document.querySelector(DOMstrings.inputType).value
       };
     },
@@ -130,6 +131,21 @@ var UIController = (function() {
 
       //insert the html into the dom
       document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+    },
+    //tyhjennetään input-kentät
+    clearFields: function() {
+      var fields, fieldsArr;
+
+      //querySelectorAll palauttaa listana, täytyy convertoida arrayks
+      fields = document.querySelectorAll(DOMstrings.inputDesc + ', ' + DOMstrings.inputValue);
+
+      fieldsArr = Array.prototype.slice.call(fields);
+
+      fieldsArr.forEach(function(cur, index, arr) {
+        cur.value = "";
+      });
+
+      fieldsArr[0].focus();
     },
     //tehdään DOMstrings-muuttujasta julkinen
     getDOMstrings: function() {
@@ -167,6 +183,12 @@ var controller = (function(budgetCtrl, UICtrl) {
   };
 
 
+  var updateBudget = function() {
+    // 1. calculate the budget
+    // 2. Return the budget
+    // 3. display the budget
+  }
+
 
   var ctrlAddItem = function() {
     var input, newItem;
@@ -174,17 +196,23 @@ var controller = (function(budgetCtrl, UICtrl) {
     input = UICtrl.getInput();
 
 
+    //IsNaN on funktio, jota voidaan käyttää kun halutaan tarkistaa onko input
+    //numero. Itseasiassa täytyy käyttää siis !IsNaN -muodossa tuota eli:
+    //Not Not a Number 
+    if (input.desc !== "" && !isNaN(input.value) && input.value > 0) {
+      // 2. add the item to the budget CONTROLLER
 
-    // 2. add the item to the budget CONTROLLER
+      newItem = budgetCtrl.addItem(input.type, input.desc, input.value);
 
-    newItem = budgetCtrl.addItem(input.type, input.desc, input.value);
+      // 3. add the item to the UI
+      UICtrl.addListItem(newItem, input.type);
 
-    // 3. add the item to the UI
-    UICtrl.addListItem(newItem, input.type);
+      // 4. Clear the fields
+      UICtrl.clearFields();
 
-    // 4. calculate the budget__title
-
-    //5. display the budget__title
+      // 5. calculate and update budgetCtrl
+      updateBudget();
+    }
 
   };
 
